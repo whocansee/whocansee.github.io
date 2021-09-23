@@ -1,0 +1,47 @@
+search:
+  modal: true
+  bg_image: /images/1.png  
+  # dark_bg_image: xxx
+   placeholder: 搜些什么吧~
+scrollreveal:
+  enable: true
+  targets:
+    - .post-card
+    - .post-content img
+cursor:
+  enable: false
+  default: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/pointer.cur
+  pointer: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/link.cur
+  text: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/text.cur
+sidebar:
+  bg_image: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-1.jpg
+  bg_position: bottom 3rem center
+  tagcloud:
+    enable: true
+    amount: 30
+social:
+  - name: QQ 786366421
+    # https://isux.tencent.com/wp-content/uploads/2016/05/20160512101222609.pdf
+    link: 
+    color: "#12B7F5"
+  - name: GitHub
+    link: https://github.com/whocansee
+    icon: icon-github-line
+    color: "#6e5494"
+  - name: 网易云音乐
+    link: https://music.163.com/#/user/home?id=364768128
+    icon: icon-netease-cloud-music-line
+    color: "#C20C0C"
+  - name: 哔哩哔哩
+    link: https://space.bilibili.com/263103748
+    icon: icon-bilibili-line
+    color: "#FF8EB3"
+  - name: E-Mail:786366421@qq.com
+    link: https://mail.qq.com/
+    icon: icon-mail-line
+    color: "#8E71C1"
+pages:
+  - name: 我的小伙伴们
+    url: /links/
+    icon: icon-genderless-line
+    color: dodgerblue
