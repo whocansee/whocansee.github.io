@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>autopush</title>
+      <link href="/2022/08/22/autopush/"/>
+      <url>/2022/08/22/autopush/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><p>利用Github action，实现修改网站源代码后，自动执行生成静态页面＋部署改变到github pages的操作（无后端静态页面）  代码如下：</p><table><thead><tr><th>name: Hexo Deploy Automatically</th><th></th></tr></thead><tbody><tr><td></td><td></td></tr><tr><td></td><td>on:</td></tr><tr><td></td><td>push:</td></tr><tr><td></td><td>branches:</td></tr><tr><td></td><td>- hexo # 网站源码所在分支名称</td></tr><tr><td></td><td></td></tr><tr><td></td><td>pull_request:</td></tr><tr><td></td><td>branches:</td></tr><tr><td></td><td>- hexo # 网站源码所在分支名称</td></tr><tr><td></td><td></td></tr><tr><td></td><td>jobs:</td></tr><tr><td></td><td>build:</td></tr><tr><td></td><td></td></tr><tr><td></td><td>runs-on: ubuntu-latest</td></tr><tr><td></td><td></td></tr><tr><td></td><td>strategy:</td></tr><tr><td></td><td>matrix:</td></tr><tr><td></td><td>node-version: [16.x]</td></tr><tr><td></td><td></td></tr><tr><td></td><td>steps:</td></tr><tr><td></td><td>- name: Checkout</td></tr><tr><td></td><td>uses: actions/checkout@v2</td></tr><tr><td></td><td></td></tr><tr><td></td><td>- name: Use Node.js $NaN</td></tr><tr><td></td><td>uses: actions/setup-node@v1</td></tr><tr><td></td><td>with:</td></tr><tr><td></td><td>node-version: $NaN</td></tr><tr><td></td><td></td></tr><tr><td></td><td>- name: Generate</td></tr><tr><td></td><td>run: |</td></tr><tr><td></td><td>npm i &amp;&amp; npx hexo g</td></tr><tr><td></td><td></td></tr><tr><td></td><td>- name: Deploy</td></tr><tr><td></td><td>uses: peaceiris/actions-gh-pages@v3</td></tr><tr><td></td><td>with:</td></tr><tr><td></td><td>github_token: $</td></tr><tr><td></td><td>publish_branch: main # 静态页面代码(即部署在Github Pages上的代码)所在分支名称</td></tr><tr><td></td><td>publish_dir: ./public</td></tr><tr><td></td><td>force_orphan: true</td></tr></tbody></table>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 技术 博客 自动部署 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>back</title>
       <link href="/2022/08/22/back/"/>
       <url>/2022/08/22/back/</url>
