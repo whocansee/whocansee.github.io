@@ -4,10 +4,10 @@
 
 # Site
 title: 七星的博客~
-subtitle: '热爱生活'
-description: '记录一些有趣的事~'
+subtitle: '一定存在只有你才能做到的事'
+description: '一个不知名黑客~'
 keywords:
-author: Jinwei Huang
+author: Sevenstar
 language: zh-CN
 timezone: ''
 
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: butterfly
+theme: Yun
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
