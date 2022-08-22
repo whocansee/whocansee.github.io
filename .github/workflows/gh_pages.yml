@@ -1,6 +1,13 @@
 name: Hexo Deploy Automatically
 
-on: [push]
+on:
+  push:
+    branches:
+      - hexo
+
+  pull_request:
+    branches:
+      - hexo
 
 jobs:
   build:
@@ -9,7 +16,7 @@ jobs:
     
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
 
     steps:
       - name: Checkout
