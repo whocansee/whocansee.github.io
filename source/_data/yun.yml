@@ -1,0 +1,168 @@
+head:
+  css:
+    fonts: http://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap
+
+
+
+mode: light
+
+avatar:
+  url: /images/kkkkkkkkkkkkkkk.png # 你的头像图片地址
+  rounded: true
+  opacity: 1
+  mickey_mouse: true
+colors:
+  primary: "#000000"
+search:
+  modal: true
+  bg_image: /images/1.png  
+banner:
+  enable: true
+  title: Just
+  src: /js/ui/banner.js
+  border: true
+  cloud:
+    enable: true
+    color: "white"
+  go_down:
+    enable: true
+    icon: icon-arrow-down-s-line
+notice:
+  enable: true
+  content: Just love yourself!.
+font:
+  cdn:
+    enable: true
+    lib:
+      - https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&display=swap
+  serif:
+    family: "'Songti SC', 'Noto Serif SC', STZhongsong, STKaiti, KaiTi, Roboto, serif"
+    weight: 900
+  sans_serif:
+    family: "'PingFang SC', 'Microsoft YaHei', Roboto, Arial, sans-serif"
+    weight: 400
+  monospace:
+    family: "'Source Code Pro', 'Courier New', Courier, Consolas, Monaco, monospace"
+bg_image:
+  enable: true
+  url: /images/2.jpg
+  dark: /images/2.jpg
+  # blur: 30px # 设置背景模糊程度
+  opacity: 0.8
+sidebar:
+  bg_image: http://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/bg/stars-timing-1.jpg
+  bg_position: bottom 3rem center
+  tagcloud:
+    enable: true
+    amount: 30
+scrollreveal:
+  enable: true
+  targets:
+    - .post-card
+    - .post-content img
+fireworks:
+  enable: true
+  colors:
+    - "52, 67, 221"
+    - "23, 181, 125"
+    - "33, 78, 94"
+    
+cursor:
+  enable: true
+  default: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/pointer.cur
+  pointer: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/link.cur
+  text: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/css/md-cursors/text.cur
+  
+footer:
+  live_time:
+    enable: true
+    prefix: 欸嘿,本博客已运行
+    suffix: (●'◡'●)
+    start_time: "2021-09-23T00:00:00"  
+  since: 2021
+  custom_text: Hosted by Github
+  
+say:
+  enable: true
+  api: /data/sentences.json
+  hitokoto:
+    enable: false    
+    
+mourn:
+  enable: true
+  days:
+    - "4-4"
+    - "9-18"
+    - "7-7"
+    - "12-13"
+pages:
+  - name: 我的小伙伴们
+    url: /links/
+    icon: icon-genderless-line
+    color: dodgerblue
+social:
+  - name: GitHub
+    link: https://github.com/whocansee
+    icon: icon-github-line
+    color: "#6e5494"
+  - name: QQ 786366421
+    link: https://user.qzone.qq.com/786366421
+    icon: icon-qq-line
+    color: "#12B7F5"
+  - name: 哔哩哔哩
+    link: https://space.bilibili.com/263103748
+    icon: icon-bilibili-line
+    color: "#FF8EB3"
+  - name: E-Mail:786366421@qq.com
+    link: https://mail.qq.com/
+    icon: icon-mail-line
+    color: "#8E71C1"
+engine_search:
+  enable: false
+local_search:
+  enable: true
+  src: /js/search/local-search.js
+wordcount:
+  enable: true
+  count: true
+  time: true
+wordcloud:
+  enable: true
+  height: 350
+menu:
+  home:
+    path: /
+    icon: icon-home-4-line
+  list:
+    - type: archives
+      path: /archives/
+      icon: icon-archive-line
+    - type: categories
+      path: /categories/
+      icon: icon-folder-2-line
+    - type: tags
+      path: /tags/
+      icon: icon-price-tag-3-line
+  custom:
+    title: 主题文档
+    path: https://yun.yunyoujun.cn
+    icon: icon-settings-line
+    
+reward:
+  enable: false
+  icon: icon-hand-coin-line
+  comment: I'm so cute. Please give me money.
+  # url: https://github.com/YunYouJun/yunyoujun.github.io/issues/96
+  methods:
+    - name: 支付宝
+      path: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/donate/alipay-qrcode.jpg
+      color: "#00A3EE"
+      icon: icon-alipay-line
+    - name: QQ 支付
+      path: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/donate/qqpay-qrcode.png
+      color: "#12B7F5"
+      icon: icon-qq-line
+    - name: 微信支付
+      path: https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/donate/wechatpay-qrcode.jpg
+      color: "#2DC100"
+      icon: icon-wechat-pay-line
