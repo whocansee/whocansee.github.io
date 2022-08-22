@@ -105,7 +105,7 @@ theme: yun
 
 deploy: 
   type: git
-  repository: https://github.com/whocansee/whocansee.github.io.git 
+  repository: https://github.com/whocansee/whocansee.github.io
   branch: main
   
 aplayer:
