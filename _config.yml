@@ -4,7 +4,7 @@
 
 # Site
 title: 七星的博客~
-subtitle: '一定存在只有你才能做到的事'
+subtitle: '一定存在只有你才能做到的事！'
 description: '一个不知名黑客~'
 keywords:
 author: Sevenstar
@@ -105,7 +105,11 @@ theme: yun
 
 deploy: 
   type: git
+<<<<<<< HEAD
   repository: git@github.com:whocansee/whocansee.github.io.git
+=======
+  repository: https://github.com/whocansee/whocansee.github.io
+>>>>>>> a38b717d307bdbb48461807d3cff511ba389ccb0
   branch: main
   
 aplayer:
