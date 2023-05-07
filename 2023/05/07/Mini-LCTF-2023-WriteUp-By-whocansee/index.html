@@ -99,7 +99,7 @@
 <p>首先进来就发现首页是典中典的无效页，直接上看源码、抓包、dirsearch三件套，除了抓包没什么收获，通过源码里的注释和dirsearch都能发现</p>
 <p><img src="https://s2.loli.net/2023/05/07/93FcKGHkrlb8JXj.png" alt="_~_4EJ6USY_9Q_IA~4X7XQK.png" loading="lazy"></p>
 <p>进入/shell.php</p>
-<p>![MX`<a href="mailto:&#78;&#87;&#x53;&#55;&#x5f;&#95;&#x4b;&#55;&#x42;&#95;&#x5f;&#x40;&#48;&#53;&#76;&#x58;&#81;&#x50;&#x5f;&#x42;&#46;&#x70;&#x6e;&#103;">&#78;&#87;&#x53;&#55;&#x5f;&#95;&#x4b;&#55;&#x42;&#95;&#x5f;&#x40;&#48;&#53;&#76;&#x58;&#81;&#x50;&#x5f;&#x42;&#46;&#x70;&#x6e;&#103;</a>](<a target="_blank" rel="noopener" href="https://s2.loli.net/2023/05/07/wYVc9M6A4rI13UT.png">https://s2.loli.net/2023/05/07/wYVc9M6A4rI13UT.png</a>)</p>
+<p>![MX`<a href="mailto:&#78;&#87;&#83;&#55;&#95;&#x5f;&#75;&#55;&#x42;&#95;&#x5f;&#x40;&#x30;&#53;&#76;&#88;&#81;&#80;&#x5f;&#x42;&#46;&#x70;&#110;&#x67;">&#78;&#87;&#83;&#55;&#95;&#x5f;&#75;&#55;&#x42;&#95;&#x5f;&#x40;&#x30;&#53;&#76;&#88;&#81;&#80;&#x5f;&#x42;&#46;&#x70;&#110;&#x67;</a>](<a target="_blank" rel="noopener" href="https://s2.loli.net/2023/05/07/wYVc9M6A4rI13UT.png">https://s2.loli.net/2023/05/07/wYVc9M6A4rI13UT.png</a>)</p>
 <p>稍有点经验就应该能看出来，要读flag.php就必须通过最后一行<code>$str1($str2);</code>来进行，而这两个变量又是怎么来的呢，是通过substr对<code>$class-&gt;$c()</code>的返回值做分割得到的，并且分割的区间可以由我们控制。这样一来思路就很清晰了，只需要让<code>$class-&gt;$c()</code>的返回值里包含我们需要的<code>system</code> <code>cat /flag</code>等字符串就可以了（当然必须是连续的）   </p>
 <p>因此我们的目光投向了<code>$class = new $a($b);</code> 很好，三个参数a, b, c我们都能控制，接下来就是考虑，<strong>往什么类里传什么参数调用什么方法能返回我们需要的值</strong>，毫无疑问的一点是，<code>system</code> <code>cat /flag</code>等字符串肯定是我们传进去的参数，并且需要让他们保持原样拼接在返回值中，那么需要什么类和什么方法呢？</p>
 <p>因而，我们来考虑源码中的过滤，对原生类的过滤中，SplFileObject被ban了其实无所谓，在这个题中本来也用不出来。Error被ban了还挺伤的，但也给了我们新的思路：在绕过中，最重要的思路之一就是寻找代替，比如——Exception</p>
