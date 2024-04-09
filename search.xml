@@ -4,6 +4,19 @@
   
     
     <entry>
+      <title>Some of my Experience</title>
+      <link href="/2024/04/09/Some%20of%20my%20Experience/"/>
+      <url>/2024/04/09/Some%20of%20my%20Experience/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><h2 id="CTF获奖"><a href="#CTF获奖" class="headerlink" title="CTF获奖"></a>CTF获奖</h2><ul><li>XCTF<ul><li>DubheCTF 2024 2nd （北邮分站赛）</li><li>L3HCTF 2024 4th</li></ul></li><li>企业CTF<ul><li>TCTF 2023 4th（腾讯CTF） </li><li>AliyunCTF 2024 4th</li></ul></li><li>强网杯初赛 2024 2nd</li></ul><h2 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h2><ul><li>通达OA<ul><li>CNVD-YCGW-202304096960</li></ul></li><li>XINDIAN（Epoint）<ul><li>权限绕过（0day）</li><li>后台RCE（0day）</li><li>…</li></ul></li></ul>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>FastJson中较少提到的特性</title>
       <link href="/2024/03/21/FastJson%E4%B8%AD%E8%BE%83%E5%B0%91%E6%8F%90%E5%88%B0%E7%9A%84%E7%89%B9%E6%80%A7/"/>
       <url>/2024/03/21/FastJson%E4%B8%AD%E8%BE%83%E5%B0%91%E6%8F%90%E5%88%B0%E7%9A%84%E7%89%B9%E6%80%A7/</url>
