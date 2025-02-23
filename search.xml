@@ -4,13 +4,25 @@
   
     
     <entry>
-      <title>Some of my Experience</title>
-      <link href="/2024/04/09/Some%20of%20my%20Experience/"/>
-      <url>/2024/04/09/Some%20of%20my%20Experience/</url>
+      <title>利用反序列化漏洞攻击Java 7 目标的注意点</title>
+      <link href="/2025/02/23/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E6%94%BB%E5%87%BBJava-7-%E7%9B%AE%E6%A0%87%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9/"/>
+      <url>/2025/02/23/%E5%88%A9%E7%94%A8%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E6%BC%8F%E6%B4%9E%E6%94%BB%E5%87%BBJava-7-%E7%9B%AE%E6%A0%87%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><h2 id="CTF获奖"><a href="#CTF获奖" class="headerlink" title="CTF获奖"></a>CTF获奖</h2><ul><li>XCTF<ul><li>DubheCTF 2024 2nd （北邮分站赛）</li><li>L3HCTF 2024 4th</li></ul></li><li>企业CTF<ul><li>TCTF 2023 4th（腾讯CTF） </li><li>AliyunCTF 2024 4th</li></ul></li><li>强网杯初赛 2024 2nd</li></ul><h2 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h2><ul><li><p>XINDIAN（Epoint、Epass…）</p><ul><li><p><strong>前台权限绕过漏洞</strong>（独立挖掘0day 无编号）</p><ul><li>可获取任意用户名的session与身份信息；指定username为admin，则可获取后台权限</li></ul></li><li><p><strong>前台远程代码执行漏洞</strong>（独立挖掘0day 无编号）</p><ul><li>通过前台一处功能点传入构造好的LDAP服务器地址，触发任意lookup，实现JNDI注入利用，从而达到任意命令执行的效果</li></ul></li><li><p><strong>后台文件上传漏洞</strong>（独立挖掘0day 无编号）</p><ul><li>可传JSP文件，例webshell/内存马，从而达到任意命令执行的效果</li></ul></li></ul></li><li><p>通达OA</p><ul><li>CNVD-2023-43031 <strong>SQL注入漏洞</strong><ul><li>连接表耗时盲注绕过通达预置安全过滤函数</li><li>通过后台一功能点传入恶意参数进行注入，可通过返回包延时不同获取系统敏感数据</li></ul></li></ul></li><li><p>qiyuesuo</p><ul><li>后台任意文件读取漏洞（独立挖掘0day 无编号）<ul><li>通过双重URL编码绕过目录穿越安全校验，读取系统任意敏感文件</li><li>可结合权限绕过Nday漏洞，从而在前台条件下完成利用</li></ul></li></ul></li></ul>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer@latest/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="https://cdn.jsdelivr.net/npm/meting@1/dist/Meting.min.js"></script><h2 id="疑虑"><a href="#疑虑" class="headerlink" title="疑虑"></a>疑虑</h2><p>今天调试某证券系统的0day，URLDNS有回显，但是CC3却没效果</p><p>我确定目标是一定有这个依赖的，于是在<code>Yakit</code>里多换了几个链，发现CC1、CC6可以</p><p>稍微一想就明白是类加载的问题，难道是目标使用了定制JDK，<code>TemplatesImpl</code>被删了？</p><p>使用FindClassByDNS链，发现<code>TemplatesImpl</code>是存在的，那很奇怪了。。。</p><p>本地尝试是可以的，所以还是往目标环境、JDK上猜测原因</p><p>一时半会儿猜不出，索性换CB链试试，代码很神奇，有两个CB的版本，其中一个是1.6，看见这个数字我突然灵光一闪————难道目标不是Java 8？</p><h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>Java 7 和 Java 8有很多类不同，随便找一个8以后才有的类<code>java.time.LocalDate</code>，使用FindClassByDNS链进行测试，没有收到回显</p><p>再换Java 7之后才有的<code>java.util.concurrent.ForkJoinPool</code>进行测试</p><p><img src="images/image-20250223223641225.png" alt="image-20250223223641225" loading="lazy"></p><p>成功回显！这意味着目标是Java 7的环境</p><h2 id="解决了…吗？"><a href="#解决了…吗？" class="headerlink" title="解决了…吗？"></a>解决了…吗？</h2><p>Yakit的yso模块有一个功能是设置TemplatesImpl里存放的字节码版本，这个选项理应能顺利解决兼容性问题</p><p><img src="images/image-20250223223958047.png" alt="image-20250223223958047" loading="lazy"></p><p>我修改成了Java 7的版本，重新进行攻击，然而远程目标并没有延迟响应，难道是这个选项没有效果？如何验证猜测呢？</p><p>想了想，我选择下载历史悠久Java 7，进行本地测试，查看更详细的报错信息</p><p><img src="images/image-20250223224145376.png" alt="image-20250223224145376" loading="lazy"></p><p>报错显示<code>java.util.Base64</code>不存在，我有点懵，定制JDK已经魔怔到了这个地步？——————不对，这是我本地的Java 7</p><p>原来<code>java.util.Base64</code> 这个好用的API是Java 8才引入的，其在 Java 7 中不可用！</p><p>Yakit生成的payload究竟在什么地方用上了Base64，这并不是Echo或者内存马呀</p><p>解码后仔细分析，这个payload里的<code>TemplatesImpl</code>装的并不是攻击代码（指静态代码块里写了一堆攻击逻辑的那种）</p><p>而是一个名叫<code>TemplateImplClassLoader</code>的类，它实现了什么逻辑呢？很简单，再加载一次类字节码，内容是Base64硬编码的真正攻击代码</p><p>（也就是类似小马拉大马的操作）</p><p>而这个地方的Base64使用的就是<code>java.util.Base64</code>，所以引发了Java 7环境下的<code>ClassNotFoundException</code></p><p>结案！</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul><li>Yakit的yso模块给了Java版本的选项，但实际又不能完成对Java低版本的攻击，我猜上线前没做测试🤔</li><li>实战中遇到Java 7的情况一定要注意<code>java.util.Base64</code>这个坑！尤其是各位老红队手上的祖传内存马，我估计都是用的这个API吧</li></ul>]]></content>
       
       
+      <categories>
+          
+          <category> 技术 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 反序列化 Java安全 </tag>
+            
+        </tags>
       
     </entry>
     
